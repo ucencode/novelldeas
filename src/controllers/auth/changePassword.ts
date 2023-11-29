@@ -13,12 +13,12 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
         const user = await userRepository.findOne({ where: { id } });
 
         if (!user) {
-            errorResponse(res, 404, "User not found");
+            errorResponse(res, 404, "Not found");
             return;
         }
 
         if (!user.checkIfPasswordMatch(password)) {
-            errorResponse(res, 400, "Password is incorrect");
+            errorResponse(res, 400, "Your old password is incorrect");
             return;
         }
 

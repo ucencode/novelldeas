@@ -21,12 +21,12 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const user = await userRepository.findOne({ where: { email } });
 
         if (!user) {
-            errorResponse(res, 404, "User not found");
+            errorResponse(res, 401, "The Credentials you provided does not match our records");
             return;
         }
 
         if (!user.checkIfPasswordMatch(password)) {
-            errorResponse(res, 400, "Password is incorrect");
+            errorResponse(res, 401, "The Credentials you provided does not match our records");
             return;
         }
 
@@ -39,9 +39,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
             const token = createJwtToken(jwtPayload);
             successResponse(res, 200, "Token successfully created", { token: `Bearer ${token}` });
         } catch (err) {
-            errorResponse(res, 500, "Internal server error", [
-                "An error occured while creating a token"
-            ]);
+            errorResponse(res, 500, "Internal server error");
         }
     } catch (err) {
         errorResponse(res, 500, "Internal server error");
