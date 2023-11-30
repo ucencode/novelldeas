@@ -4,21 +4,20 @@ import * as bcrypt from 'bcryptjs';
 @Entity()
 @Index(['email'], { unique: true })
 export class User {
-    @PrimaryGeneratedColumn()
-    @Generated('uuid')
-    id: string
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column()
-    firstName: string
+    firstName: string;
 
     @Column()
-    lastName: string
+    lastName: string;
 
     @Column()
-    email: string
+    email: string;
 
     @Column()
-    password: string
+    password: string;
 
     @Column()
     @CreateDateColumn()

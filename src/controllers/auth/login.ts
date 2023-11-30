@@ -8,26 +8,18 @@ import { User } from "../../orm/entities/User";
 import { successResponse, errorResponse } from '../../utils/response';
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
-    const result: Result = validationResult(req);
-    console.log(result.array());
-    if (!result.isEmpty()) {
-        errorResponse(res, 400, "Validation error", result.array());
-        return;
-    }
     const { email, password } = req.body;
-
-    const userRepository = dataSource.getRepository(User);
+    
     try {
+        const userRepository = dataSource.getRepository(User);
         const user = await userRepository.findOne({ where: { email } });
 
         if (!user) {
-            errorResponse(res, 401, "The Credentials you provided does not match our records");
-            return;
+            return errorResponse(res, 401, "The Credentials you provided does not match our records");
         }
 
         if (!user.checkIfPasswordMatch(password)) {
-            errorResponse(res, 401, "The Credentials you provided does not match our records");
-            return;
+            return errorResponse(res, 401, "The Credentials you provided does not match our records");
         }
 
         const jwtPayload: JwtPayload = {
@@ -35,13 +27,9 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
             created_at: user.created_at,
         };
 
-        try {
-            const token = createJwtToken(jwtPayload);
-            successResponse(res, 200, "Token successfully created", { token: `Bearer ${token}` });
-        } catch (err) {
-            errorResponse(res, 500, "Internal server error");
-        }
+        const token = createJwtToken(jwtPayload);
+        return successResponse(res, 200, "Token successfully created", { token: `Bearer ${token}` });
     } catch (err) {
-        errorResponse(res, 500, "Internal server error");
+        return errorResponse(res, 500, "Internal server error");
     }
 };

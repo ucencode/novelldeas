@@ -4,30 +4,28 @@ import dataSource from "../../orm/dataSource";
 import { successResponse, errorResponse } from '../../utils/response';
 
 export const changePassword = async (req: Request, res: Response, next: NextFunction) => {
+    const { password, passwordNew } = req.body;
     
     try {
-        const { password, passwordNew } = req.body;
         const { id } = req.jwtPayload;
 
         const userRepository = dataSource.getRepository(User);
         const user = await userRepository.findOne({ where: { id } });
 
         if (!user) {
-            errorResponse(res, 404, "Not found");
-            return;
+            return errorResponse(res, 404, "Not found");
         }
 
         if (!user.checkIfPasswordMatch(password)) {
-            errorResponse(res, 400, "Your old password is incorrect");
-            return;
+            return errorResponse(res, 400, "Your old password is incorrect");
         }
 
         user.password = passwordNew;
         user.hashPassword();
-        userRepository.save(user);
+        await userRepository.save(user);
 
-        successResponse(res, 200, "Password changed successfully");
+        return successResponse(res, 200, "Password changed successfully");
     } catch (err) {
-        errorResponse(res, 500, "Internal server error");
+        return errorResponse(res, 500, "Internal server error");
     }
 };

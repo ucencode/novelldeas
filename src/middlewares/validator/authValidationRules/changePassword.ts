@@ -12,7 +12,7 @@ export const changePasswordValidationRules = [
 	body('passwordConfirm')
 		.notEmpty().withMessage('Confirm new password is required')
 		.custom((value, { req }) => {
-			if (value !== req.body.newPassword) {
+			if (value !== req.body.passwordNew) {
 				throw new Error('Passwords must match');
 			}
 			return true;
