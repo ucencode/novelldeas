@@ -1,8 +1,7 @@
 
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Unique, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Author } from './Author';
 import { Category } from './Category';
-import slugify from 'slugify';
 
 @Entity()
 export class Book {

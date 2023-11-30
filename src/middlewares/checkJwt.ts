@@ -8,8 +8,7 @@ import { errorResponse } from '../utils/response';
 export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
 	const authHeader = req.get('Authorization');
 	if (!authHeader) {
-		errorResponse(res, 400, "Authorization header not provided");
-		return;
+		return errorResponse(res, 400, "Authorization header not provided");
 	}
 
 	const token = authHeader.split(' ')[1];
@@ -19,8 +18,7 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
 		['iat', 'exp'].forEach((keyToRemove) => delete jwtPayload[keyToRemove]);
 		req.jwtPayload = jwtPayload as JwtPayload;
 	} catch (err) {
-		errorResponse(res, 401, "Invalid token");
-		return;
+		return errorResponse(res, 401, "Invalid token");
 	}
 
 	try {
