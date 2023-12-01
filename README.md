@@ -15,11 +15,13 @@ npm install
 ```
 
 ### Build the app
+This will compile the TypeScript code to JavaScript and put it in the `dist` folder.
 ```bash
 npm run build
 ```
 
 ### Build the docker for database
+Create a docker image for the database, so you don't have to install PostgreSQL on your machine.
 ```bash
 docker-compose up -d
 ```
