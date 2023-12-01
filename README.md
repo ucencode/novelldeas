@@ -1,6 +1,5 @@
-# TypeScript Express PostgreSQL App with Docker and TypeORM
-
-This is a sample TypeScript Express app with PostgreSQL database and Docker containerization using TypeORM.
+# Novelldeas
+Novelldeas is a web application for book store using typescript and express js.
 
 ## Installation
 
@@ -22,8 +21,13 @@ npm run build
 
 ### Build the docker for database
 Create a docker image for the database, so you don't have to install PostgreSQL on your machine.
+
 ```bash
+# Docker Compose V1
 docker-compose up -d
+
+# Docker Compose V2
+docker compose up -d
 ```
 After this command, this app is automatically connected to the database.
 
