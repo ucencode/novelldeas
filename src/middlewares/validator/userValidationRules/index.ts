@@ -24,6 +24,15 @@ export const userValidationRules = [
         }),
 
     body('password')
-        .notEmpty().withMessage('Password is required')
-        .isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
+        .custom((value, {req}) => {
+            if (!req.params.id) {
+                if (!value) {
+                    throw new Error('Password is required');
+                }
+                if (value.length < 8) {
+                    throw new Error('Password must be at least 8 characters');
+                }
+            }
+            return true;
+        })
 ];
