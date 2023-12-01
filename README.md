@@ -1,6 +1,10 @@
 # Novelldeas
 Novelldeas is a web application for book store using typescript and express js.
 
+## Requirements
+- Node.js
+- Docker
+
 ## Installation
 
 ### Clone the repository and navigate to the project directory
