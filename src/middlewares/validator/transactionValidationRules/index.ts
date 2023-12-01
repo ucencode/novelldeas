@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { body, query } from 'express-validator';
 
 export const transactionValidationRules = [
     body('items')
@@ -24,6 +24,19 @@ export const transactionValidationRules = [
             }, 0);
             if (value < totalPrice) {
                 throw new Error('Paid must be greater than or equal to total price');
+            }
+            return true;
+        })
+];
+
+export const searchTransactionValidationRules = [
+    query('date')
+        .custom((value, { req }) => {
+            if (value) {
+                const regex = new RegExp(/^\d{4}-\d{2}-\d{2}$/);
+                if (!regex.test(value)) {
+                    throw new Error('Date must be in YYYY-MM-DD format');
+                }
             }
             return true;
         })
