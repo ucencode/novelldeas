@@ -8,5 +8,10 @@ dist/
 *.js
 *.js.map
 
-# Ignore environment variables file
-.env
+# Ignore database file
+database/*
+!database/.gitkeep 
+
+# Ignore log file
+log/*
+!log/.gitkeep 

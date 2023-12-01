@@ -8,7 +8,7 @@ import { TransactionItem } from '../../orm/entities/TransactionItem';
 export const create = async (req: Request, res: Response, next: NextFunction) => {
     const { items, paid, discount } = req.body;
     
-    // try {
+    try {
         const transaction = new Transaction();
 
         await dataSource.manager.transaction(async (transactionalEntityManager) => {
@@ -16,21 +16,21 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
             const { transactionItems, totalPrice } = await mapItems(items);
 
             transaction.code = await generateTransactionCode();
+            transaction.itemIds = transactionItems;
             transaction.discount = discount || 0;
             transaction.totalPrice = totalPrice;
             transaction.paid = paid;
             transaction.createdBy = req.jwtPayload.id;
             await transactionRepository.save(transaction);
 
-            await putItems(transaction, transactionItems);
             await updateStock(transactionItems);
         });
 
         const responseTransaction = await dataSource.getRepository(Transaction).findOne({where: { id: transaction.id }, relations: ["itemIds"]});
         return successResponse(res, 200, "Transaction created successfully", responseTransaction);
-    // } catch (err) {
-    //     return errorResponse(res, 500, "Internal server error");
-    // }
+    } catch (err) {
+        return errorResponse(res, 500, "Internal server error");
+    }
 };
 
 /**
@@ -84,20 +84,6 @@ const mapItems = async (items: object[]): Promise<{ transactionItems: Transactio
 
     return { transactionItems, totalPrice };
 }
-
-/**
- * Saves the given items to the transaction item repository with the specified transaction ID.
- * @param transactionId - The ID of the transaction.
- * @param items - The items to be saved.
- * @returns A promise that resolves when the items are successfully saved.
- */
-const putItems = async (transaction: Transaction, items: TransactionItem[]): Promise<void> => {
-    const transactionItemRepository = dataSource.getRepository(TransactionItem);
-    items.forEach(async (item) => {
-        item.transaction = transaction;
-        await transactionItemRepository.save(item);
-    });
-};
 
 /**
  * Updates the stock of books based on the provided transaction items.

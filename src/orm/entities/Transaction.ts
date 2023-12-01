@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, DeleteDateColumn, BeforeInsert, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
 import { TransactionItem } from './TransactionItem';
 
 @Entity()
@@ -11,7 +11,10 @@ export class Transaction {
     })
     code: string;
 
-    @OneToMany(() => TransactionItem, (transactionItem) => transactionItem.transaction, { eager: true })
+    @OneToMany(() => TransactionItem, (transactionItem) => transactionItem.transaction, { 
+        eager: true,
+        cascade: true
+    })
     itemIds: TransactionItem[];
 
     @Column()
@@ -28,9 +31,6 @@ export class Transaction {
 
     @Column()
     createdBy: string;
-
-    @DeleteDateColumn()
-    softDelete: Date;
 
     countChange() {
         return this.paid - this.totalPrice;

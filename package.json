@@ -8,7 +8,12 @@
     "start": "ts-node src/index.ts",
     "watch": "ts-node-dev src/index.ts --respawn --transpile-only",
     "build": "tsc",
-    "serve": "node dist/index.js"
+    "serve": "node dist/index.js",
+    "typeorm": "typeorm-ts-node-esm",
+    "migration:create": "npm run typeorm migration:create --",
+    "migration:generate": "npm run typeorm migration:generate -- src/orm/migrations/generateTables -d src/orm/dataSource.ts",
+    "migration:run": "npm run typeorm migration:run -- -d src/orm/dataSource.ts",
+    "migration:revert": "npm run typeorm -- migration:revert"
   },
   "author": "Ahmad Husein Hambali",
   "license": "ISC",
@@ -30,8 +35,10 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.5",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^20.10.0",
     "@types/uuid": "^9.0.7",
     "@types/validator": "^13.11.7",
