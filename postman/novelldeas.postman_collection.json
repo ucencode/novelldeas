@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "11ccecba-33c6-4313-96cb-d5981d4adccf",
 		"name": "novelldeas",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "16952751"
 	},
 	"item": [
@@ -21,7 +21,9 @@
 									"    var token = pm.response.json().data.token;",
 									"    token = token.replace(\"Bearer \", \"\");",
 									"    pm.collectionVariables.set(\"token\", token);",
-									"}"
+									"}",
+									"",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -39,25 +41,52 @@
 								}
 							}
 						},
-						"url": "{{host}}/login"
+						"url": {
+							"raw": "{{host}}/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"test@example.com\",\n    \"password\": \"admin1234\",\n    \"passwordConfirm\": \"admin1234\"\n}",
+							"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"example@test.com\",\n    \"password\": \"admin1234\",\n    \"passwordConfirm\": \"admin1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{host}}/register"
+						"url": {
+							"raw": "{{host}}/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"register"
+							]
+						}
 					},
 					"response": []
 				},
@@ -75,7 +104,15 @@
 								}
 							}
 						},
-						"url": "{{host}}/change-password"
+						"url": {
+							"raw": "{{host}}/change-password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"change-password"
+							]
+						}
 					},
 					"response": []
 				}
@@ -89,7 +126,15 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{host}}/users"
+						"url": {
+							"raw": "{{host}}/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users"
+							]
+						}
 					},
 					"response": []
 				},
@@ -98,7 +143,16 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{host}}/users/e219517c-dffb-4ef8-9577-291e66a2bc27"
+						"url": {
+							"raw": "{{host}}/users/9d510365-b499-4de1-b584-934d30bbd1a2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"9d510365-b499-4de1-b584-934d30bbd1a2"
+							]
+						}
 					},
 					"response": []
 				},
@@ -116,7 +170,15 @@
 								}
 							}
 						},
-						"url": "{{host}}/users"
+						"url": {
+							"raw": "{{host}}/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users"
+							]
+						}
 					},
 					"response": []
 				},
@@ -134,7 +196,16 @@
 								}
 							}
 						},
-						"url": "{{host}}/users/e219517c-dffb-4ef8-9577-291e66a2bc27"
+						"url": {
+							"raw": "{{host}}/users/e219517c-dffb-4ef8-9577-291e66a2bc27",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"e219517c-dffb-4ef8-9577-291e66a2bc27"
+							]
+						}
 					},
 					"response": []
 				},
@@ -152,7 +223,16 @@
 								}
 							}
 						},
-						"url": "{{host}}/users/e219517c-dffb-4ef8-9577-291e66a2bc27"
+						"url": {
+							"raw": "{{host}}/users/e219517c-dffb-4ef8-9577-291e66a2bc27",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"e219517c-dffb-4ef8-9577-291e66a2bc27"
+							]
+						}
 					},
 					"response": []
 				}
@@ -166,7 +246,15 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{host}}/authors"
+						"url": {
+							"raw": "{{host}}/authors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authors"
+							]
+						}
 					},
 					"response": []
 				},
@@ -175,7 +263,16 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{host}}/authors/1"
+						"url": {
+							"raw": "{{host}}/authors/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authors",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -193,7 +290,15 @@
 								}
 							}
 						},
-						"url": "{{host}}/authors"
+						"url": {
+							"raw": "{{host}}/authors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authors"
+							]
+						}
 					},
 					"response": []
 				},
@@ -211,7 +316,16 @@
 								}
 							}
 						},
-						"url": "{{host}}/authors/3"
+						"url": {
+							"raw": "{{host}}/authors/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authors",
+								"3"
+							]
+						}
 					},
 					"response": []
 				},
@@ -229,7 +343,16 @@
 								}
 							}
 						},
-						"url": "{{host}}/authors/4"
+						"url": {
+							"raw": "{{host}}/authors/4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authors",
+								"4"
+							]
+						}
 					},
 					"response": []
 				}
@@ -243,7 +366,15 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{host}}/categories"
+						"url": {
+							"raw": "{{host}}/categories",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
 					},
 					"response": []
 				},
@@ -252,7 +383,16 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{host}}/categories/1"
+						"url": {
+							"raw": "{{host}}/categories/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"categories",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -270,7 +410,15 @@
 								}
 							}
 						},
-						"url": "{{host}}/categories"
+						"url": {
+							"raw": "{{host}}/categories",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
 					},
 					"response": []
 				},
@@ -288,7 +436,16 @@
 								}
 							}
 						},
-						"url": "{{host}}/categories/4"
+						"url": {
+							"raw": "{{host}}/categories/4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"categories",
+								"4"
+							]
+						}
 					},
 					"response": []
 				},
@@ -306,7 +463,16 @@
 								}
 							}
 						},
-						"url": "{{host}}/categories/4"
+						"url": {
+							"raw": "{{host}}/categories/4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"categories",
+								"4"
+							]
+						}
 					},
 					"response": []
 				}
@@ -320,7 +486,15 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{host}}/books"
+						"url": {
+							"raw": "{{host}}/books",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"books"
+							]
+						}
 					},
 					"response": []
 				},
@@ -329,7 +503,16 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{host}}/books/2"
+						"url": {
+							"raw": "{{host}}/books/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"books",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -347,7 +530,15 @@
 								}
 							}
 						},
-						"url": "{{host}}/books"
+						"url": {
+							"raw": "{{host}}/books",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"books"
+							]
+						}
 					},
 					"response": []
 				},
@@ -365,7 +556,16 @@
 								}
 							}
 						},
-						"url": "{{host}}/books/1"
+						"url": {
+							"raw": "{{host}}/books/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"books",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -383,7 +583,17 @@
 								}
 							}
 						},
-						"url": "{{host}}/books/1/adjust-stock"
+						"url": {
+							"raw": "{{host}}/books/1/adjust-stock",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"books",
+								"1",
+								"adjust-stock"
+							]
+						}
 					},
 					"response": []
 				},
@@ -401,7 +611,16 @@
 								}
 							}
 						},
-						"url": "{{host}}/users/16d689ce-2efe-4a18-b8a2-77b6e88131a1"
+						"url": {
+							"raw": "{{host}}/users/16d689ce-2efe-4a18-b8a2-77b6e88131a1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"16d689ce-2efe-4a18-b8a2-77b6e88131a1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -424,26 +643,42 @@
 								}
 							}
 						},
-						"url": "{{host}}/transactions"
+						"url": {
+							"raw": "{{host}}/transactions",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "List",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "{{host}}/transactions"
-					},
-					"response": []
-				},
-				{
-					"name": "List by date",
+					"name": "Get All",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/transactions?date=",
+							"raw": "{{host}}/transactions",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/transactions?date=2023-12-01",
 							"host": [
 								"{{host}}"
 							],
@@ -453,7 +688,7 @@
 							"query": [
 								{
 									"key": "date",
-									"value": ""
+									"value": "2023-12-01"
 								}
 							]
 						}
@@ -465,7 +700,16 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{host}}/transactions/1"
+						"url": {
+							"raw": "{{host}}/transactions/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transactions",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -474,9 +718,13 @@
 	],
 	"auth": {
 		"type": "bearer",
-		"bearer": {
-			"token": "{{token}}"
-		}
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
 	},
 	"event": [
 		{
