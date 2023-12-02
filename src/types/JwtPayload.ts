@@ -1,4 +1,4 @@
-export type JwtPayload = {
-  id: string;
-  created_at: Date;
-};
+export interface JwtPayload {
+  id: string
+  created_at: Date
+}

@@ -1,30 +1,28 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne } from 'typeorm';
-import { Transaction } from './Transaction';
-import { type } from 'os';
-import { Book } from './Book';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm'
+import { Transaction } from './Transaction'
 
 @Entity()
 export class TransactionItem {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number
 
-    @ManyToOne(() => Transaction, (transaction) => transaction.itemIds, { eager: false })
-    transaction: Transaction;
+  @ManyToOne(() => Transaction, (transaction) => transaction.itemIds, { eager: false })
+  transaction: Transaction
 
-    @Column()
-    bookId: number;
+  @Column()
+  bookId: number
 
-    @Column()
-    bookTitle: string;
+  @Column()
+  bookTitle: string
 
-    @Column({type: "float"})
-    quantity: number;
+  @Column({type: 'float'})
+  quantity: number
 
-    @Column({type: "float"})
-    price: number;
+  @Column({type: 'float'})
+  price: number
 
-    countSubTotal() {
-        return this.quantity * this.price;
-    }
+  countSubTotal() {
+    return this.quantity * this.price
+  }
 }

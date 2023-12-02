@@ -13,7 +13,7 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "typeRoots": ["./src/types", "./node_modules/@types"],
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],
