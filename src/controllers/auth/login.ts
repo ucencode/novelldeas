@@ -21,8 +21,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     }
 
     const jwtPayload: JwtPayload = {
-      id: user.id,
-      created_at: user.created_at
+      id: user.id
     }
 
     const token = createJwtToken(jwtPayload)

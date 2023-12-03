@@ -7,7 +7,7 @@ export const find = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params
 
   try {
-    const user = await dataSource.getRepository(Transaction).findOne({where: { id : parseInt(id) }})
+    const user = await dataSource.getRepository(Transaction).findOne({ where: { id: parseInt(id) } })
     if (!user) {
       return errorResponse(res, 404, 'Transaction not found')
     }

@@ -39,5 +39,25 @@ export const searchTransactionValidationRules = [
         }
       }
       return true
+    }),
+
+  query('page')
+    .custom((value) => {
+      if (value) {
+        if (isNaN(value)) {
+          throw new Error('"page" must be numeric')
+        }
+      }
+      return true
+    }),
+
+  query('perPage')
+    .custom((value) => {
+      if (value) {
+        if (isNaN(value)) {
+          throw new Error('"perPage" must be numeric')
+        }
+      }
+      return true
     })
 ]

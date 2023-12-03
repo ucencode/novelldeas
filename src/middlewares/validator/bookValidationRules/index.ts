@@ -1,4 +1,4 @@
-import { body } from 'express-validator'
+import { body, query } from 'express-validator'
 import dataSource from '../../../orm/dataSource'
 import { Category } from '../../../orm/entities/Category'
 import { Author } from '../../../orm/entities/Author'
@@ -71,4 +71,31 @@ export const adjustStockValidationRules = [
     .notEmpty().withMessage('Stock is required')
     .isNumeric().withMessage('Stock must be numeric')
     .isFloat({ min: 0 }).withMessage('Stock cannot be negative number')
+]
+
+export const searchBookValidationRules = [
+  query('search')
+    .optional(),
+
+  query('page')
+    .optional()
+    .custom((value) => {
+      if (value) {
+        if (isNaN(value)) {
+          throw new Error('"page" must be numeric')
+        }
+      }
+      return true
+    }),
+
+  query('perPage')
+    .optional()
+    .custom((value) => {
+      if (value) {
+        if (isNaN(value)) {
+          throw new Error('"perPage" must be numeric')
+        }
+      }
+      return true
+    })
 ]

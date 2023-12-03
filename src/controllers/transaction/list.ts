@@ -1,43 +1,34 @@
 import { Request, Response, NextFunction } from 'express'
-import { Repository } from 'typeorm'
+import { SelectQueryBuilder } from 'typeorm'
 import { Transaction } from '../../orm/entities/Transaction'
 import dataSource from '../../orm/dataSource'
 import { successResponse, errorResponse } from '../../utils/response'
+import paginate from '../../utils/paginate'
 
 export const list = async (req: Request, res: Response) => {
-  const { date } = req.query
+  const date = req.query.date as string
+  const page = Number(req.query.page) || 1
+  const limit = Number(req.query.perPage) || 10
+
+  console.log('page', page)
+
   try {
-    const transactionRepository = dataSource.getRepository(Transaction)
+    const transactionQueryBuilder = getSelectQueryBuilder(date)
+    const transactions = await paginate(transactionQueryBuilder, { page, limit })
 
-    let transactions: Transaction[] = []
-    if (date) {
-      transactions = await getTransactionByDate(transactionRepository, date as string)
-    } else {
-      transactions = await getAllTransactions(transactionRepository)
-    }
-
-    const message = transactions.length > 0 ? transactions.length + ' Transactions Found' : 'No Transactions Found'
+    const message = transactions.result.length > 0 ? 'Transactions successfully retrieved' : 'No transactions found'
     return successResponse(res, 200, message, transactions)
   } catch (error) {
     return errorResponse(res, 500, 'Internal server error')
   }
 }
 
-const getTransactionByDate = async (repository: Repository<Transaction>, date: string): Promise<Transaction[]> => {
-  const transactions = await repository
+const getSelectQueryBuilder = (date?: string): SelectQueryBuilder<Transaction> => {
+  const queryBuilder = dataSource.getRepository(Transaction)
     .createQueryBuilder('transaction')
     .innerJoinAndSelect('transaction.itemIds', 'itemIds')
-    .where('DATE(transaction.createdAt) = :date', { date })
-    .getMany()
-
-  return transactions
-}
-
-const getAllTransactions = async (repository: Repository<Transaction>): Promise<Transaction[]> => {
-  const transactions = await repository
-    .createQueryBuilder('transaction')
-    .innerJoinAndSelect('transaction.itemIds', 'itemIds')
-    .getMany()
-
-  return transactions
+  if (date) {
+    queryBuilder.where('DATE(transaction.createdAt) = :date', { date })
+  }
+  return queryBuilder
 }

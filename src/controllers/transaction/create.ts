@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { type Request, type Response, type NextFunction } from 'express'
 import dataSource from '../../orm/dataSource'
 import { Transaction } from '../../orm/entities/Transaction'
 import { errorResponse, successResponse } from '../../utils/response'
@@ -38,7 +38,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
  * If there are no previous transactions, the code will start with 'TRX-1'.
  * @returns The generated transaction code.
  */
-const generateTransactionCode = async () => {
+const generateTransactionCode = async (): Promise<string> => {
   const transactionRepository = dataSource.getRepository(Transaction)
   const lastTransaction = await transactionRepository
     .createQueryBuilder('transaction')
@@ -59,8 +59,8 @@ const generateTransactionCode = async () => {
  * @param items - The items to be mapped.
  * @returns A promise that resolves to an object containing the transaction items and the total price.
  */
-const mapItems = async (items: object[]): Promise<{ transactionItems: TransactionItem[], totalPrice: number }> => {
-  const itemIds = items.map(item => item['id'])
+const mapItems = async (items: Array<{ id: number, quantity: number }>): Promise<{ transactionItems: TransactionItem[], totalPrice: number }> => {
+  const itemIds = items.map(item => item.id)
   const books = await dataSource
     .getRepository(Book)
     .createQueryBuilder('book')
@@ -68,18 +68,18 @@ const mapItems = async (items: object[]): Promise<{ transactionItems: Transactio
     .getMany()
 
   const transactionItems = books.map(book => {
-    const item = items.find(item => item['id'] === book.id)
+    const item = items.find(item => item.id === book.id)
     const transactionItem = new TransactionItem()
     transactionItem.bookId = book.id
     transactionItem.bookTitle = book.title
-    transactionItem.quantity = item['quantity']
+    transactionItem.quantity = item.quantity
     transactionItem.price = book.price
     return transactionItem
   })
 
   const totalPrice = books.reduce((total: number, book: Book) => {
-    const item = items.find(item => item['id'] === book.id)
-    return total + (book.price * item['quantity'])
+    const item = items.find(item => item.id === book.id)
+    return total + (book.price * item.quantity)
   }, 0)
 
   return { transactionItems, totalPrice }

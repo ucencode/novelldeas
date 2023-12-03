@@ -1,46 +1,33 @@
 import { Request, Response, NextFunction } from 'express'
-import { Repository } from 'typeorm'
+import { SelectQueryBuilder } from 'typeorm'
 import { Book } from '../../orm/entities/Book'
 import dataSource from '../../orm/dataSource'
 import { successResponse, errorResponse } from '../../utils/response'
+import paginate from '../../utils/paginate'
 
 export const list = async (req: Request, res: Response) => {
-  const { search } = req.query
+  const search = req.query.search as string
+  const page = Number(req.query.page) || 1
+  const limit = Number(req.query.perPage) || 10
+
   try {
-    const bookRepository = dataSource.getRepository(Book)
+    const bookQueryBuilder = getBookQueryBuilder(search)
+    const books = await paginate(bookQueryBuilder, { page, limit })
 
-    let books: Book[] = []
-
-    if (search) {
-      books = await getBookBySearch(bookRepository, search as string)
-    } else {
-      books = await getAllBooks(bookRepository)
-    }
-
-    const message = books.length > 0 ? books.length + ' Books Found' : 'No Books Found'
+    const message = books.result.length > 0 ? 'Books successfully retrieved' : 'No books found'
     return successResponse(res, 200, message, books)
   } catch (error) {
     return errorResponse(res, 500, 'Internal server error')
   }
 }
 
-const getBookBySearch = async (repository: Repository<Book>, search: string): Promise<Book[]> => {
-  const books = await repository
+const getBookQueryBuilder = (search?: string): SelectQueryBuilder<Book> => {
+  const queryBuilder = dataSource.getRepository(Book)
     .createQueryBuilder('book')
     .innerJoinAndSelect('book.category', 'category')
     .innerJoinAndSelect('book.author', 'author')
-    .where('book.title LIKE :search', { search })
-    .getMany()
-
-  return books
-}
-
-const getAllBooks = async (repository: Repository<Book>): Promise<Book[]> => {
-  const books = await repository
-    .createQueryBuilder('book')
-    .innerJoinAndSelect('book.category', 'category')
-    .innerJoinAndSelect('book.author', 'author')
-    .getMany()
-
-  return books
+  if (search) {
+    queryBuilder.where('book.title LIKE :search', { search: `%${search}%` })
+  }
+  return queryBuilder
 }
