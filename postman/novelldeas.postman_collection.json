@@ -487,12 +487,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/books",
+							"raw": "{{host}}/books/1",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"books"
+								"books",
+								"1"
 							]
 						}
 					},
@@ -661,12 +662,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/transactions",
+							"raw": "{{host}}/transactions?page=1&perPage=10",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"transactions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perPage",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -678,7 +689,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/transactions?date=2023-12-01",
+							"raw": "{{host}}/transactions?date=2023-12-03&page=1&perPage=1",
 							"host": [
 								"{{host}}"
 							],
@@ -688,7 +699,15 @@
 							"query": [
 								{
 									"key": "date",
-									"value": "2023-12-01"
+									"value": "2023-12-03"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perPage",
+									"value": "1"
 								}
 							]
 						}
